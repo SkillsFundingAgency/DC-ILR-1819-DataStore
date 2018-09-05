@@ -4,7 +4,8 @@ CREATE procedure [dbo].[DeleteExistingRecords] (@ukprn int, @fileName NVARCHAR(1
 BEGIN 
 
 --FileDetails--
-DELETE FROM [dbo].[FileDetails] WHERE [UKPRN] = @ukprn AND [Filename] = @fileName AND [Success] ='0' 
+-- Todo: Fix this
+DELETE FROM [dbo].[FileDetails] WHERE [UKPRN] = @ukprn AND [Filename] = @fileName -- AND [Success] ='0' 
 DELETE FROM [dbo].[ValidationError] WHERE UKPRN = @ukprn
 
 
@@ -50,9 +51,9 @@ DELETE FROM [Rulebase].[DV_Cases] WHERE UKPRN = @ukprn
 DELETE FROM [Rulebase].[DV_global] WHERE UKPRN = @ukprn
 DELETE FROM [Rulebase].[DV_Learner] WHERE UKPRN = @ukprn
 DELETE FROM [Rulebase].[DV_LearningDelivery] WHERE UKPRN = @ukprn
-DELETE FROM [Rulebase].[EFA_Cases] WHERE UKPRN = @ukprn
-DELETE FROM [Rulebase].[EFA_global] WHERE UKPRN = @ukprn
-DELETE FROM [Rulebase].[EFA_Learner] WHERE UKPRN = @ukprn
+DELETE FROM [Rulebase].[FM25_Cases] WHERE UKPRN = @ukprn
+DELETE FROM [Rulebase].[FM25_global] WHERE UKPRN = @ukprn
+DELETE FROM [Rulebase].[FM25_Learner] WHERE UKPRN = @ukprn
 DELETE FROM [Rulebase].[EFA_SFA_Cases] WHERE UKPRN = @ukprn
 DELETE FROM [Rulebase].[EFA_SFA_global] WHERE UKPRN = @ukprn
 DELETE FROM [Rulebase].[EFA_SFA_Learner_Period] WHERE UKPRN = @ukprn
@@ -67,11 +68,11 @@ DELETE FROM [Rulebase].[ESF_LearningDeliveryDeliverable] WHERE UKPRN = @ukprn
 DELETE FROM [Rulebase].[ESF_LearningDeliveryDeliverable_Period] WHERE UKPRN = @ukprn
 DELETE FROM [Rulebase].[ESF_LearningDeliveryDeliverable_PeriodisedValues] WHERE UKPRN = @ukprn
 DELETE FROM [Rulebase].[ESF_DPOutcome] WHERE UKPRN = @ukprn
-DELETE FROM [Rulebase].[SFA_Cases] WHERE UKPRN = @ukprn
-DELETE FROM [Rulebase].[SFA_global] WHERE UKPRN = @ukprn
-DELETE FROM [Rulebase].[SFA_LearningDelivery] WHERE UKPRN = @ukprn
-DELETE FROM [Rulebase].[SFA_LearningDelivery_Period] WHERE UKPRN = @ukprn
-DELETE FROM [Rulebase].[SFA_LearningDelivery_PeriodisedValues] WHERE UKPRN = @ukprn
+DELETE FROM [Rulebase].[FM35_Cases] WHERE UKPRN = @ukprn
+DELETE FROM [Rulebase].[FM35_global] WHERE UKPRN = @ukprn
+DELETE FROM [Rulebase].[FM35_LearningDelivery] WHERE UKPRN = @ukprn
+DELETE FROM [Rulebase].[FM35_LearningDelivery_Period] WHERE UKPRN = @ukprn
+DELETE FROM [Rulebase].[FM35_LearningDelivery_PeriodisedValues] WHERE UKPRN = @ukprn
 DELETE FROM [Rulebase].[TBL_Cases] WHERE UKPRN = @ukprn
 DELETE FROM [Rulebase].[TBL_global] WHERE UKPRN = @ukprn
 DELETE FROM [Rulebase].[TBL_LearningDelivery] WHERE UKPRN = @ukprn
@@ -108,7 +109,9 @@ DELETE FROM [Valid].[ProviderSpecLearnerMonitoring] WHERE UKPRN = @ukprn
 DELETE FROM [Valid].[Source] WHERE UKPRN = @ukprn
 DELETE FROM [Valid].[SourceFile] WHERE UKPRN = @ukprn
 
-
-
 END
+
+GO
+
+GRANT EXECUTE ON [dbo].[DeleteExistingRecords] TO [DataProcessing]
 

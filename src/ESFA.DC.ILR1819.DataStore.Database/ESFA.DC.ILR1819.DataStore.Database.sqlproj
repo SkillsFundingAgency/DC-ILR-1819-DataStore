@@ -58,6 +58,31 @@
     <SSDTExists Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets')">True</SSDTExists>
     <VisualStudioVersion Condition="'$(SSDTExists)' == ''">11.0</VisualStudioVersion>
   </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x64' ">
+    <OutputPath>bin\Release\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
+    <OutputPath>bin\Debug\</OutputPath>
+    <BuildScriptName>$(MSBuildProjectName).sql</BuildScriptName>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
   <Import Condition="'$(SQLDBExtensionsRefPath)' != ''" Project="$(SQLDBExtensionsRefPath)\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <Import Condition="'$(SQLDBExtensionsRefPath)' == ''" Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v$(VisualStudioVersion)\SSDT\Microsoft.Data.Tools.Schema.SqlTasks.targets" />
   <ItemGroup>
@@ -201,9 +226,37 @@
     <Build Include="Rulebase\Tables\FM25_Learner.sql" />
     <Build Include="Rulebase\Tables\FM25_global.sql" />
     <Build Include="Rulebase\Tables\FM25_Cases.sql" />
+    <Build Include="Security\User_RW.sql" />
+    <Build Include="Security\User_RO.sql" />
+    <Build Include="Security\DataProcessing.sql" />
+    <Build Include="Security\DataViewing.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="zzDeploymentProfiles\zz.Local.Dev.Version.publish.xml" />
-    <None Include="zzDeploymentProfiles\Release.publish.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <SqlCmdVariable Include="BUILD_BRANCHNAME">
+      <DefaultValue>XXX</DefaultValue>
+      <Value>$(SqlCmdVar__5)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="BUILD_BUILDNUMBER">
+      <DefaultValue>YY.YY.YY.YY</DefaultValue>
+      <Value>$(SqlCmdVar__3)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="RELEASE_RELEASENAME">
+      <DefaultValue>WWW.WWW-www.www</DefaultValue>
+      <Value>$(SqlCmdVar__6)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="ROUserPassword">
+      <DefaultValue>NotUsed@1223zxxas@ss.PP</DefaultValue>
+      <Value>$(SqlCmdVar__1)</Value>
+    </SqlCmdVariable>
+    <SqlCmdVariable Include="RWUserPassword">
+      <DefaultValue>NotUsed@1223zxxas@ss.PQ</DefaultValue>
+      <Value>$(SqlCmdVar__2)</Value>
+    </SqlCmdVariable>
+  </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="zzScript.PreDeployment.sql" />
   </ItemGroup>
 </Project>
